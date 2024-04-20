@@ -542,3 +542,389 @@ def same(a,b): # 입력 a는 리스트 b는 찾고자 하는 특정한 값
 - 최악의 경우를 분석하는 것이 중요
 - 이 알고리즘의 최악의 경우는 비교가 최대 n번 필요하고 계산 복잡도는 O(n)
 """
+
+# 연습 문제
+# 찾는 값이 나오는 모든 위치를 리스트로 돌려주는 탐색 알고리즘
+# 찾는 값이 없다면 빈 리스트를 돌려줌
+def searchfind(array, finddata):
+  bin=[]
+  n=len(array)
+  for i in range(0,n):
+    if(array[i] == finddata):
+       bin.append(i)
+  return bin
+
+
+
+
+bin=[]
+array = ['1','2','4','1','1','5','1','5','1','88']
+
+
+print(searchfind(array,'1'))
+
+"""### 계산복잡도
+- O(n)
+- 탐색 중간에 나오더라도 탐색을 멈추지 않고 끝까지 탐색해야
+"""
+
+# 학생 번호에 해당하는 학생 이름 찾기
+# 입력: 학생 번호 리스트 s_no, 학생 이름 리스트 s_name,
+# 찾는 학생 번호 find_no
+# 출력: 해당하는 학생 이름, 학생 이름이 없으면 물음표"?""
+no=[1,2,3,4]
+name=['jiwoo','yejin','jaeyoung','joy']
+
+def get_name(name,no,find_no):
+  n= len(no)
+  for i in range(0,n):
+    if find_no == no[i]:
+        return name[i]
+  return "?"
+
+get_name(name, no, 3)
+
+"""08. 선택 정렬
+
+"""
+
+# 주어진 리스트 안의 자료를 작은 수부터 큰 수 순서로 배열하는 정렬 알고리즘
+
+# 문제: 리스트 안에 있는 자료를 순서대로 배열하기
+# 입력: 정렬한 리스트[ , , , ]
+# 출력: 순서대로 정렬된 리스트 []
+
+
+def find_min_idx(a):
+  n=len(a)
+  min_idx = 0
+  for i in range(1,n):
+    if(a[i]<a[min_idx]):
+       min_idx=i
+  return min_idx
+
+def sortAry(a):
+  res = []
+  while len(a) != 0:
+    min_idx = find_min_idx(a)
+    value = a.pop(min_idx)      # del을 이용하여 삭제한 후 최솟값 찾기를 진행하는 방법도 있
+    res.append(value)
+  return res
+
+a = [85,4,36,84,1,59]
+print(sortAry(a))
+
+# 일반적인 선택 정렬 알고리즘
+def sel_sort(a):
+  n= len(a)
+  for i in range(0,n-1):  # 0
+    minidx = i
+    for j in range(i+1,n):  # (0,1)(0,2)(0,3)
+      if a[minidx]>a[j]:    # 안에 for 문을 모두 돈 다음에 첫 번째 for문을 돌 예정
+                            # 이렇게 해야지 만약 i=0이었을때 그 자리에 최솟값이 들어갈 수 있다.
+                            # 두번째 for문에서 처음 으로 i=0의 인덱싱보다 작은 값을 만났을때
+                            # 그 값이 최솟값이 아니고 그저 a[i]보다 작은 것일수도 있다.
+          minidx=j  # minidx=1
+          # a[i],a[minidx] = a[minidx], a[i]
+          # 이 교환하는 값을 안에 두면 에러 발생
+    a[i],a[minidx] = a[minidx], a[i]
+    # a[i]와 다른 수와 비교할때 제일 최속값을 찾아서 교환
+    # index=0부분의 최솟값을 찾은 후에 그 값들을
+
+array=[3,5,1,2,6,7]
+sel_sort(array)
+print(array)
+
+"""  ##### 파이썬에서 두 자료 값의 위치를 서로 바꾸기
+  - a[i], a[mixidx] = a[mixidx], a[i]
+"""
+
+x=1
+y=2
+x,y = y,x
+print(x)
+print(y)
+
+"""###알고리즘 분석
+- 자료를 크기 순서로 정렬하려면 반드시 두 수의 크기를 비교해야함
+- 계산 복잡도는 보통 비교 횟수를 기준으로 따짐
+- 동명이인 찾기의 경우 리스트 안의 자료를 한 번씩 비교해야함
+- 따라서 이는 총 n(n-1)/2번 해야 하며 계산 복잡도가 O(n^2)
+- 비교횟수가 입력크기의 제곱에 비례
+
+"""
+
+# 일반적인 선택 정렬 알고리즘을 사용해서 리스트[2,4,5,1,3]을 정렬하는 과정을 적기
+
+a=[2,4,5,1,3]
+def sort_a(array):
+  n = len(array)
+  for i in range (0,n-1):
+    min_idx = i
+    for j in range(i+1,n):
+      if array[min_idx] > array[j]:
+        min_idx = j
+    array[min_idx], array[i] = array[i], array[min_idx]
+    print('과정',array)
+        # array[min_idx], array[j] = array[j], array[min_idx]
+        # min_idx와 j를 비교하는게 아님
+        # array[min_idx]보다 array[j]가 작으면 min_idx에 j가 들어감
+        # 즉, 위 코드는 같은 인덱스끼리 바꾸는 꼴이 됨
+
+sort_a(a)
+print(a)
+
+# 내림차순 정렬
+a=[2,4,5,1,3]
+def sort_a(array):
+  n = len(array)
+  for i in range (0,n-1):
+    max_idx = i
+    for j in range(i+1,n):
+      if array[max_idx] < array[j]:
+        max_idx = j
+    array[i], array[max_idx] = array[max_idx], array[i]
+    print('과정',array)
+
+
+sort_a(a)
+print(a)
+
+"""09. 삽입 정렬
+- 리스트 안의 자료를 작은 수부터 큰 수 순서로 배열하는 정렬 알고리즘
+
+"""
+
+# 삽입 정렬 알고리즘(기본)
+
+# 리스트 r에서 v가 들어가야 할 위치를 뽑아줌
+def find_insert(r,v):
+  for i in range(0,len(r)):
+    if v < r[i]:
+      return i
+  return len(r) # 적절한 위치를 찾지 못함
+                # v가 모든 자료보가 크다는 뜻
+                # 이 코드가 for문의 끝에 있어야 함
+                # for 문에서 res안의 값들과 다 비교 한 후에 반환되어야
+
+def sort(a):
+  res = []
+  while len(a)!=0:
+    value = a.pop(0) # pop을 하면 a 리스트에서 그 값이 없어져서 pop(0)을 해도 계속 다른 값
+    idx = find_insert(res,value) # 이 과정을 거치면 index 위치가 나옴
+    res.insert(idx, value)
+
+  return res # while이 False일때 반한
+
+d=[2,4,5,1,3]
+sort(d)
+
+#2
+#-> insert 0
+#res = [2]
+
+#4
+#-> 1
+#res = [2,4]
+
+#위 방법을 반복
+
+# 스스로 해보기
+# 일반적인 삽입 알고리즘
+# 삽입 정렬
+# 입력 : 리스트 a
+# 출력 : 없음(입력으로 주어진 a가 정렬됨)
+
+d= [2,1,4,5,3]
+def sort_array(a):
+  n=len(a) # 5
+  for i in range(1, n): # i: 1부터 4까지
+    # i번 위치의  값을 key로 저장
+    key = a[i] # 교환을 위한
+    # j를 i 바로 왼쪽 위치로 저장
+    j=i-1
+
+    # 리스트의 j번 위치에 있는 값과 key를 비교해 key가 삽입될 적절한 위치를 찾음
+    while j >= 0 and a[j] > key: # key값은 고정되어야 함
+                                 #그 key값을 앞의 인덱스와 비교하여 자리를 옮기기 때문에
+    # false가 될 때까지 반복
+      a[j+1] = a[j] # j의 인덱싱 값이 key 값보다 크면 key값이 j의 자리로 가야함
+                    # i값은 j로 바뀌어야 함
+                    # 여기서 우선은 a[j]>key이다
+                    # j+1이 i가 되면 안되는 이유?
+                    # 중복된 값이 3개 이상이 될 수 있다
+                    # 우리는 key값을 넣어 줄 자리를 찾는데 중복된 값은 2개가 충분
+      j -=1     # 그래서 j의 값을 계속 줄여줌
+                # 오름차순 정렬이므로 key값의 위치를 찾기 위해서는
+                # 키값보다 작은 인덱스의 값과 비교해줘야하기 떄문에
+    # while문이 false가 될때   -> a[j]가 key값보다 작다는 의미
+    # a[j+1]에 key값이 들어가야 하고 a[j]의 값은 유지되어야 함
+    a[j+1] = key
+
+sort_array(d)
+print(d)
+
+"""####일반적인 삽입 정렬 알고리즘을 사용해서 리스트[2,4,5,1,3]을 정렬하는 과정
+- 일반적인 삽입 정렬은 처리할 대상 범위에 있는 맨 앞 값을 적절한 위치에 넣는 과정을 반복
+- 이 과정이 한 번 끝날 때마다 대상 범위에 있는 맨 앞의 값이 제 위치로 찾아 가므로 정렬 대상 범위는 하나씩 줄어듦
+- 이미 정렬이 끝난 부분과 앞으로 처리될 대상 범위 사이에 세로 선을 넣어 구분
+
+###알고리즘 분석
+- 정렬이 끝난 리스트를 넣어주면 O(n)의 계산 복잡도로 정렬을 마칠 수 있음
+- 일반적인 입력일 때 O(n^2)
+- 정렬할 입력 크기가 크면 정렬하는 데 시간이 오래 걸림
+"""
+
+#  스스로 하기
+# 내림차순 정렬
+
+def sort_asc(a):
+  n = len(a)
+  for i in range(1,n):  # i=2
+    j= i-1    #j=1
+    key = a[i] # key의 위치를 찾음
+               # 우리는 key값의 위치를 찾아야 하므로 모든 수를 key와 비교
+
+    while j>=0 and a[j] < key: #a[1]<a[2]
+
+      a[j+1] = a[j]
+                  # j+1로 표현해야함
+      j = j-1
+      # j=0일때 그리고 a[0]>a[i]일때
+      # a[i] = a[j] -> a[2] = a[0] => 0,1,2 위치의 값이 같아짐
+      # 따라서 i 가 아닌 j+1로 표현해야함
+    # 우리는 고정된 i값일때만 고려하면 됨
+    # key의 위치만 찾으면 되므로 옮겨 가는 과정에서 내림차순이 아닌것은 고려 x
+
+    # whil문에서 a[j] 가 key값보다 크면 a[j+1]에 key값을 넣어야함
+    a[j+1] = key
+
+d = [51,68,21,13,95]
+sort_asc(d)
+print(d)
+
+"""10. 병합 정렬"""
+
+# 리스트 안의 자료를 작은 수부터 큰 수 순서로 배열하는 정렬 알고리즘
+# 쉽게 설명한 병합 정렬 알고리즘
+def sort_arry(a):
+  n = len(a)
+  # 종료조건: 정렬할 리스트의 자료 개수가 한개이면 정렬 필요 없음
+  if n <= 1:
+    return a
+  # 리스트의 크기가 1 이하이면, 입력 리스트를 그대로 돌려주면서 재귀호출을 끝냄
+
+  mid = n//2
+  g1 = sort_arry(a[:mid])
+  g2 = sort_arry(a[mid:])
+
+  res = []
+  while len(g1)!=0 and len(g2)!=0:
+    if g1[0] <g2[0]:
+      # g1값이 더 작으면 그 값을 빼내어 결과로 줌
+      res.append(g1.pop(0))
+    else:
+      res.append(g2.pop(0))
+
+  while g1:# 아직 g1이 남아있다면
+    res.append(g1.pop(0))
+  while g2:
+    res.append(g2.pop(0))
+  return res
+
+d=[6,5,8,4,62,7,1,15,9]
+print(sort_arry(d))
+
+#다시해보기(****)
+# 일반적인 병합 정렬 알고리즘
+def merge_sort(a):
+  n = len(a)
+  if n<=1:
+    return
+
+  # 그룹을 나누어 각각 병합 정렬을 호출하는 과정
+  mid = n//2
+  g1 = a[:mid]
+  g2 = a[mid:]
+  merge_sort(g1)
+  merge_sort(g2)
+  # 두 그룹을 하나로 병합
+  i1 = 0
+  i2 = 0
+  ia = 0
+  while i1 < len(g1) and i2 < len(g2):
+    if g1[i1] < g2[i2]:
+      a[ia] = g1[i1]
+      i1 += 1
+      ia += 1
+    else:
+      a[ia] = g2[i2]
+      i2 += 1
+      ia += 1
+  # 아직 남아 있는 자료들을 결과에 추가
+  while i1 < len(g1):
+    a[ia] = g1[i1]
+    i1 += 1
+    ia += 1
+
+  while i2 < len(g2):
+    a[ia] = g2[i2]
+    i2 += 1
+    ia += 1
+
+d = [6,8,3,9,10,1,2,4,7,5]
+merge_sort(d)
+print(d)
+
+"""###알고리즘 분석
+- 병합 정렬은 주어진 문제를 절반으로 나눈 다음 각각을 재귀호출로 풀어가는 방식
+- 큰 문제를 작은 문제로 나눠서 푸는 방법
+- 입력크기가 커서 풀기 어려웠던 문제도 반복해서 잘게 나누면서 쉬운 문제(종료조건)이 되는 원리
+- 분할 정복은 잘 활용하면 계산 복잡도가 더 낮은 효율적인 알고리즘을 만드는데 도움이 됨
+- 계산 복잡도는 O(n*log n)
+- 선택 정렬, 삽입 정렬의 계산 복잡도O(n^2)보다 낮음
+
+
+"""
+
+# 내림차순 병합 정렬
+def merge_sort(a):
+  n = len(a)
+  if n<=1:
+    return
+
+  # 그룹을 나누어 각각 병합 정렬을 호출하는 과정
+  mid = n//2
+  g1 = a[:mid]
+  g2 = a[mid:]
+  merge_sort(g1)
+  merge_sort(g2)
+  # 두 그룹을 합치는 과정
+  i1 = 0
+  i2 = 0
+  ia = 0
+  while i1 < len(g1) and i2 < len(g2):
+    if g1[i1] > g2[i2]:
+      a[ia] = g1[i1]
+      i1 += 1
+      ia += 1
+    else:
+      a[ia] = g2[i2]
+      i2 += 1
+      ia += 1
+  # 아직 남아 있는 자료들을 결과에 추가
+  while i1 < len(g1):
+    a[ia] = g1[i1]
+    i1 += 1
+    ia += 1
+
+  while i2 < len(g2):
+    a[ia] = g2[i2]
+    i2 += 1
+    ia += 1
+
+d = [6,8,3,9,10,1,2,4,7,5]
+merge_sort(d)
+print(d)
+
+
